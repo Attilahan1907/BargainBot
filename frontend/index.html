@@ -448,6 +448,7 @@
 <div class="location-row">
   <input type="text" id="location" placeholder="Ort oder PLZ (optional)" />
   <select id="radius" class="radius-select">
+    <option value="0">-- Deutschlandweit</option>
     <option value="5">5 km</option>
     <option value="10">10 km</option>
     <option value="20">20 km</option>
@@ -534,8 +535,11 @@
 
     const location = locationInput.value.trim();
     const radius = parseInt(radiusSelect.value);
+    const isNationwide = radius === 0;
 
-    const locationInfo = location ? ` (${location}, ${radius} km)` : "";
+    let locationInfo = "";
+    if (isNationwide) locationInfo = " (Deutschlandweit)";
+    else if (location) locationInfo = ` (${location}, ${radius} km)`;
     addMessage(query + locationInfo, "user");
     queryInput.value = "";
     showTypingIndicator();
@@ -546,7 +550,7 @@
       const res = await fetch("http://127.0.0.1:5000/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query, location, radius })
+        body: JSON.stringify({ query, location: isNationwide ? "" : location, radius: isNationwide ? 0 : radius })
       });
       
       hideTypingIndicator();

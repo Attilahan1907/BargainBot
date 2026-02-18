@@ -56,7 +56,7 @@ def get_kleinanzeigen_results(query, location="", radius=50, max_pages=5):
     results = []
 
     params = {}
-    if location_encoded:
+    if location_encoded and radius != 0:
         params["locationStr"] = location.strip()
         params["radius"] = radius
 
