@@ -50,15 +50,22 @@ def _parse_page(soup, query):
             continue
     return results
 
-def get_kleinanzeigen_results(query, max_pages=5):
+def get_kleinanzeigen_results(query, location="", radius=50, max_pages=5):
     query_encoded = query.replace(" ", "-")
+    location_encoded = location.strip().replace(" ", "-").lower()
     results = []
 
     for page in range(1, max_pages + 1):
-        if page == 1:
-            url = f"https://www.kleinanzeigen.de/s-{query_encoded}/k0"
+        if location_encoded:
+            if page == 1:
+                url = f"https://www.kleinanzeigen.de/s-{radius}km/{location_encoded}/{query_encoded}/k0"
+            else:
+                url = f"https://www.kleinanzeigen.de/s-seite:{page}/{radius}km/{location_encoded}/{query_encoded}/k0"
         else:
-            url = f"https://www.kleinanzeigen.de/s-seite:{page}/{query_encoded}/k0"
+            if page == 1:
+                url = f"https://www.kleinanzeigen.de/s-{query_encoded}/k0"
+            else:
+                url = f"https://www.kleinanzeigen.de/s-seite:{page}/{query_encoded}/k0"
 
         try:
             response = requests.get(url, headers=headers, timeout=10)

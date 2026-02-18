@@ -346,27 +346,62 @@
       margin-bottom: 20px;
     }
     
+    .location-row {
+      display: flex;
+      gap: 8px;
+      padding: 0 16px 10px 16px;
+      background: var(--header-bg);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .location-row input {
+      flex: 1;
+      padding: 8px 14px;
+      font-size: 14px;
+      border-radius: 20px;
+    }
+
+    .radius-select {
+      padding: 8px 12px;
+      font-size: 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      background: var(--input-bg);
+      color: var(--text);
+      cursor: pointer;
+      min-width: 130px;
+    }
+
+    .radius-select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
     @media (max-width: 600px) {
       .bubble {
         max-width: 90%;
       }
-      
+
       #input-area {
         padding: 10px 12px;
       }
-      
+
       button {
         padding: 0 16px;
       }
-      
+
       .desktop-text {
         display: none;
       }
-      
+
       .theme-toggle {
         width: 36px;
         height: 36px;
         font-size: 18px;
+      }
+
+      .location-row {
+        padding: 0 12px 8px 12px;
       }
     }
   </style>
@@ -401,19 +436,34 @@
 
 <div id="input-area">
   <div class="input-wrapper">
-    <input type="text" id="query" placeholder="What product are you looking for?" 
+    <input type="text" id="query" placeholder="Nach welchem Produkt suchst du?"
            onkeypress="handleKeyPress(event)" autofocus />
     <i class="fas fa-paper-plane input-icon" onclick="sendQuery()"></i>
   </div>
   <button onclick="sendQuery()">
     <i class="fas fa-search"></i>
-    <span class="desktop-text">Search</span>
+    <span class="desktop-text">Suchen</span>
   </button>
+</div>
+<div class="location-row">
+  <input type="text" id="location" placeholder="Ort oder PLZ (optional)" />
+  <select id="radius" class="radius-select">
+    <option value="5">5 km</option>
+    <option value="10">10 km</option>
+    <option value="20">20 km</option>
+    <option value="30">30 km</option>
+    <option value="50" selected>50 km</option>
+    <option value="100">100 km</option>
+    <option value="150">150 km</option>
+    <option value="200">200 km</option>
+  </select>
 </div>
 
 <script>
   const chatContainer = document.getElementById("chat-container");
   const queryInput = document.getElementById("query");
+  const locationInput = document.getElementById("location");
+  const radiusSelect = document.getElementById("radius");
   const themeToggle = document.getElementById("themeToggle");
   
   // Check for saved theme preference or use preferred color scheme
@@ -482,18 +532,21 @@
     const query = queryInput.value.trim();
     if (!query) return;
 
-    addMessage(query, "user");
+    const location = locationInput.value.trim();
+    const radius = parseInt(radiusSelect.value);
+
+    const locationInfo = location ? ` (${location}, ${radius} km)` : "";
+    addMessage(query + locationInfo, "user");
     queryInput.value = "";
     showTypingIndicator();
 
     try {
-      // Simulate network delay for demo
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       const res = await fetch("http://127.0.0.1:5000/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query })
+        body: JSON.stringify({ query, location, radius })
       });
       
       hideTypingIndicator();

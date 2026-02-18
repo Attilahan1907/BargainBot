@@ -9,10 +9,12 @@ CORS(app)
 def search():
     data = request.json
     query = data.get("query", "")
+    location = data.get("location", "")
+    radius = data.get("radius", 50)
     if not query:
         return jsonify([])
 
-    results = get_kleinanzeigen_results(query)
+    results = get_kleinanzeigen_results(query, location=location, radius=radius)
     return jsonify(sorted(results, key=lambda x: x["price"]))
 
 if __name__ == "__main__":
