@@ -180,6 +180,23 @@ python test_telegram.py
 
 ---
 
+## Regel: Bei jedem Git-Push → PROGRESS.md aktualisieren
+
+**PFLICHT:** Jedes Mal wenn Code auf Git gepusht wird, muss `PROGRESS.md` im Projektwurzelverzeichnis aktualisiert werden.
+
+Format:
+```
+## [Datum] - [Kurzbeschreibung]
+### Was gemacht wurde:
+- ...
+### Dateien geändert:
+- ...
+```
+
+`PROGRESS.md` ist das Protokoll aller Änderungen über alle Sessions hinweg.
+
+---
+
 ## Vorsichtshinweise
 
 - `price_alerts.json` und `search_alerts.json` enthalten Telegram-IDs → in .gitignore
