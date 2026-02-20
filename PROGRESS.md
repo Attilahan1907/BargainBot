@@ -2,10 +2,26 @@
 
 ---
 
+## [20.02.2026] - Sprint 1: Provider-Modell (BaseScraper + Refactoring)
+### Was gemacht wurde:
+- `sites/base_scraper.py` erstellt — abstrakte Basisklasse mit Header-Rotation (6 User-Agents) + random Delays
+- `sites/kleinanzeigen.py` zu `KleinanzeigenScraper(BaseScraper)` umgebaut
+- Backward-Compat gewahrt: `get_kleinanzeigen_results()` und `get_price_from_listing_url()` bleiben verfügbar
+- `main.py`: Provider-Registry `PROVIDERS = {"kleinanzeigen": ...}` — eBay einfach einsteckbar
+- `sources` Parameter im `/search` Endpunkt (Default: `["kleinanzeigen"]`)
+- Cache-Key enthält jetzt `sources`
+- Ergebnis-Format: `"source"` Feld auf jedem Item
+### Dateien geändert:
+- `sites/base_scraper.py` — neu
+- `sites/kleinanzeigen.py` — Klasse statt Funktion
+- `main.py` — Provider-Registry
+
+---
+
 ## [20.02.2026] - Planung: Multi-Source Erweiterung (eBay + Amazon)
 ### Status: PLANUNG — wartet auf OK
 ### Geplante Meilensteine:
-- [ ] **Sprint 1:** Refactoring — BaseScraper + Provider-Modell (Kleinanzeigen bleibt kompatibel)
+- [x] **Sprint 1:** Refactoring — BaseScraper + Provider-Modell (Kleinanzeigen bleibt kompatibel)
 - [ ] **Sprint 2:** eBay-Provider (API-First, Scraping-Fallback)
 - [ ] **Sprint 3:** Amazon-Provider (PA-API oder robuste Selektoren)
 - [ ] **Sprint 4:** Normalisierung — einheitlicher Deal-Score für alle Quellen

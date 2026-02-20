@@ -3,7 +3,11 @@ load_config()  # .env laden oder Setup-Routine starten – muss als erstes passi
 
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-from sites.kleinanzeigen import get_kleinanzeigen_results
+from sites.kleinanzeigen import KleinanzeigenScraper
+
+PROVIDERS = {
+    "kleinanzeigen": KleinanzeigenScraper(),
+}
 import threading
 import time
 import os
@@ -66,20 +70,30 @@ def search():
     if not query and not category_id:
         return jsonify({"results": [], "has_more": False})
 
-    cache_key = f"{query}|{location}|{radius}|{category}|{category_id}|{start_page}|{batch_size}"
+    sources = data.get("sources", ["kleinanzeigen"])
+
+    cache_key = f"{query}|{location}|{radius}|{category}|{category_id}|{start_page}|{batch_size}|{'_'.join(sorted(sources))}"
     cached = _cache_get(cache_key)
     if cached:
         print(f"[cache] HIT: {cache_key}")
         return jsonify(cached)
 
     print(f"[cache] MISS: {cache_key}")
-    results, has_more = get_kleinanzeigen_results(
-        query, location=location, radius=radius,
-        start_page=start_page, batch_size=batch_size,
-        category=category, category_id=category_id
-    )
+    all_results = []
+    has_more = False
 
-    sorted_results = sorted(results, key=lambda x: x["price"])
+    for source in sources:
+        if source not in PROVIDERS:
+            continue
+        results, more = PROVIDERS[source].search(
+            query, location=location, radius=radius,
+            start_page=start_page, batch_size=batch_size,
+            category=category, category_id=category_id
+        )
+        all_results.extend(results)
+        has_more = has_more or more
+
+    sorted_results = sorted(all_results, key=lambda x: x["price"])
     response_data = {"results": sorted_results, "has_more": has_more}
     _cache_set(cache_key, response_data)
 
