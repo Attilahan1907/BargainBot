@@ -33,7 +33,7 @@ export default function App() {
   const [minPrice, setMinPrice] = useState('')
   const [maxPrice, setMaxPrice] = useState('')
   const [showImages, setShowImages] = useState(false)
-  const [includeEbay, setIncludeEbay] = useState(false)
+  const [includeEbay, setIncludeEbay] = useState(true)
 
   const filteredResults = useMemo(() => {
     const min = minPrice !== '' ? Number(minPrice) : 0
@@ -58,9 +58,18 @@ export default function App() {
     search(effectiveQuery, location, radius, activeCategory?.benchmarkType || null, activeCategory?.categoryId || null, sources)
   }
 
+  /* Ambient Glow Hintergrund — wiederverwendbar */
+  const ambientBg = (
+    <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
+      <div className="absolute left-1/2 top-0 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#00e5ff]/[0.04] blur-[120px]" />
+      <div className="absolute right-0 top-1/3 h-[400px] w-[400px] translate-x-1/2 rounded-full bg-[#7c3aed]/[0.03] blur-[100px]" />
+    </div>
+  )
+
   if (showWatchlist) {
     return (
-      <div className="min-h-screen bg-base flex flex-col">
+      <div className="relative min-h-screen bg-base flex flex-col">
+        {ambientBg}
         <Header
           onLogoClick={() => {
             setShowWatchlist(false)
@@ -81,7 +90,8 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-base flex flex-col">
+    <div className="relative min-h-screen bg-base flex flex-col">
+      {ambientBg}
       <Header
         onLogoClick={() => {
           setActiveCategory(null)
@@ -101,7 +111,7 @@ export default function App() {
         query={lastQuery}
         onOpenSettings={() => { setShowSearchAlert(false); setShowSettings(true) }}
       />
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      <main className="relative z-10 flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
         <SearchBar
           onSearch={handleSearch}
           loading={loading}

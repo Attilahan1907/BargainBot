@@ -49,7 +49,7 @@ export function ProductCard({ item, rank, isBest, allPrices, dealScore, isBenchm
   return (
     <>
       <div
-        className={`glass rounded-2xl p-5 flex flex-col gap-3 transition-all duration-300 hover:scale-[1.02] hover:bg-white/[0.05] group relative ${
+        className={`group relative glass rounded-2xl p-5 flex flex-col gap-3 transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-0.5 hover:bg-[rgba(255,255,255,0.04)] hover:border-[rgba(255,255,255,0.12)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] active:scale-[0.99] active:shadow-none ${
           isBest ? 'animate-pulse-glow border-emerald-glow/30' : ''
         }`}
       >

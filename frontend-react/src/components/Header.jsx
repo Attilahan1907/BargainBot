@@ -6,47 +6,54 @@ export function Header({ onLogoClick, onWatchlistClick, onSettingsClick, onAlert
   const favoritesCount = favorites.length
 
   return (
-    <header className="w-full pt-10 pb-6 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto flex flex-col items-center gap-3">
-        <div className="relative w-full flex justify-end gap-2">
+    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4">
+      <nav className="w-full max-w-4xl flex items-center justify-between gap-4 rounded-full border border-[rgba(255,255,255,0.06)] bg-[rgba(10,10,10,0.7)] backdrop-blur-xl px-4 py-2.5">
+        {/* Logo */}
+        <button
+          onClick={onLogoClick}
+          className="flex items-center gap-2.5 hover:opacity-80 transition-opacity cursor-pointer"
+        >
+          <img
+            src="/logo.png"
+            alt="BargainBot"
+            className="w-8 h-8 rounded-xl object-cover"
+          />
+          <span className="text-sm font-semibold text-white/90 hidden sm:block">BargainBot</span>
+        </button>
+
+        {/* Rechte Seite: Action Buttons */}
+        <div className="flex items-center gap-1.5">
           <button
             onClick={onSettingsClick}
-            className="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg px-3 py-2 text-white/70 hover:text-white transition-all"
-            title="Benachrichtigungs-Einstellungen"
+            className="flex items-center justify-center w-9 h-9 rounded-full text-white/50 hover:text-white hover:bg-white/8 transition-all"
+            title="Einstellungen"
           >
             <Settings className="w-4 h-4" />
           </button>
+
           <button
             onClick={onAlertsClick}
-            className="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg px-3 py-2 text-white/70 hover:text-white transition-all"
+            className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-white/60 hover:text-white hover:bg-white/8 transition-all"
             title="Meine Alerts"
           >
-            <Bell className="w-4 h-4" />
-            <span className="text-sm font-medium">Alerts</span>
+            <Bell className="w-3.5 h-3.5" />
+            <span className="hidden sm:block">Alerts</span>
           </button>
+
           <button
             onClick={onWatchlistClick}
-            className="relative flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg px-4 py-2 text-white/70 hover:text-white transition-all"
+            className="relative flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium bg-[rgba(0,229,255,0.08)] border border-[rgba(0,229,255,0.15)] text-[#00e5ff] hover:bg-[rgba(0,229,255,0.15)] transition-all"
           >
-            <Heart className="w-4 h-4" />
-            <span className="text-sm font-medium">Watchlist</span>
+            <Heart className="w-3.5 h-3.5" />
+            <span className="hidden sm:block">Watchlist</span>
             {favoritesCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+              <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
                 {favoritesCount}
               </span>
             )}
           </button>
         </div>
-        <img
-          src="/logo.png"
-          alt="Emirates of Deals"
-          className="w-52 h-52 rounded-3xl object-cover cursor-pointer hover:scale-105 transition-transform"
-          onClick={onLogoClick}
-        />
-        <p className="text-sm text-white/40 tracking-wide">
-          Finde die besten Preise
-        </p>
-      </div>
+      </nav>
     </header>
   )
 }

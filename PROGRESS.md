@@ -18,6 +18,26 @@
 
 ---
 
+## [20.02.2026] - Sprint UI-1 bis UI-5: Premium Design Integration
+### Was gemacht wurde:
+- **index.css**: CSS-Variablen auf Premium-Werte aktualisiert (#050505 BG, #00e5ff Cyan, #7c3aed Violet), `.glass` verbessert, `.hover-lift` Utility hinzugefügt
+- **App.jsx**: Ambient-Glow-Hintergrund (2 fixed Blobs Cyan + Violett), `relative z-10` für main, `pt-24` für fixed Header
+- **Header.jsx**: Pill-Nav, fixed top, `backdrop-blur-xl`, Glassmorphism, kompakte Buttons
+- **SearchBar.jsx**: Hero-Search-Style mit Focus-Glow, `isFocused`-State, Popular-Searches-Pills, Cyan Submit-Button mit Glow-Shadow
+- **CategoryGrid.jsx**: Premium Bento-Grid, Hover-Blob-Effekt pro Karte, cubic-bezier Animationen
+- **StatsBar.jsx**: 4-Spalten-Divider-Grid (`gap-px overflow-hidden`), kompaktes Layout
+- **ProductCard.jsx**: `hover:-translate-y-0.5`, cubic-bezier Transition, neue Box-Shadow
+### Dateien geändert:
+- `frontend-react/src/index.css`
+- `frontend-react/src/App.jsx`
+- `frontend-react/src/components/Header.jsx`
+- `frontend-react/src/components/SearchBar.jsx`
+- `frontend-react/src/components/CategoryGrid.jsx`
+- `frontend-react/src/components/StatsBar.jsx`
+- `frontend-react/src/components/ProductCard.jsx`
+
+---
+
 ## [20.02.2026] - Sprint 4+5: Normalisierung — Einheitlicher Deal-Score + Quell-Badge
 ### Was gemacht wurde:
 - `ResultsGrid`: Deal-Score wird jetzt **immer** berechnet, nicht nur bei Benchmark-Kategorien

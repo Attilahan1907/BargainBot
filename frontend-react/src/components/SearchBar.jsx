@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Search, MapPin, Loader2, X, Zap, Bell } from 'lucide-react'
 import { FilterPanel } from './FilterPanel'
 
@@ -15,10 +15,16 @@ const RADIUS_OPTIONS = [
   { value: 200, label: '200 km' },
 ]
 
+const POPULAR_SEARCHES = [
+  'iPhone 15 Pro', 'PlayStation 5', 'MacBook Air', 'Samsung Galaxy S24', 'AirPods Pro', 'RTX 4070',
+]
+
 export function SearchBar({ onSearch, loading, activeCategory, onClearCategory, minPrice, maxPrice, onMinPriceChange, onMaxPriceChange, hasSearched, onSearchAlert, showImages, onShowImagesChange, includeEbay, onIncludeEbayChange }) {
   const [query, setQuery] = useState('')
   const [location, setLocation] = useState('')
   const [radius, setRadius] = useState(-1)
+  const [isFocused, setIsFocused] = useState(false)
+  const inputRef = useRef(null)
 
   const handleLocationChange = (e) => {
     const val = e.target.value
@@ -46,11 +52,13 @@ export function SearchBar({ onSearch, loading, activeCategory, onClearCategory, 
     }
   }
 
+  /* ---------------------------------------------------------------- Render */
   return (
-    <form onSubmit={handleSubmit} className="glass rounded-2xl p-4 sm:p-6 mt-2">
+    <form onSubmit={handleSubmit} className="w-full">
+      {/* Kategorie-Badge */}
       {activeCategory && (
-        <div className="flex items-center gap-2 mb-3">
-          <span className="inline-flex items-center gap-1.5 bg-electric-purple/15 border border-electric-purple/25 text-electric-purple text-[11px] font-semibold rounded-full px-3 py-1">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="inline-flex items-center gap-1.5 bg-[#7c3aed]/15 border border-[#7c3aed]/25 text-[#a78bfa] text-[11px] font-semibold rounded-full px-3 py-1">
             {activeCategory.benchmarkType && <Zap className="w-3 h-3 text-amber-400" />}
             {activeCategory.label}
             <button
@@ -62,64 +70,101 @@ export function SearchBar({ onSearch, loading, activeCategory, onClearCategory, 
             </button>
           </span>
           {activeCategory.benchmarkType && (
-            <span className="text-[10px] text-amber-400/60">
-              Preis-Leistungs-Analyse aktiv
-            </span>
+            <span className="text-[10px] text-amber-400/60">Preis-Leistungs-Analyse aktiv</span>
           )}
         </div>
       )}
 
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
-          <input
-            type="text"
-            placeholder={activeCategory ? `Suche in ${activeCategory.label}...` : 'Was suchst du?'}
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-white/30 outline-none focus:border-neon-cyan/50 focus:ring-1 focus:ring-neon-cyan/30 transition-all"
-          />
+      {/* Hero Search Input */}
+      <div
+        className={`relative rounded-2xl border transition-all duration-300 ${
+          isFocused
+            ? 'border-[rgba(0,229,255,0.3)] shadow-[inset_0_2px_20px_rgba(0,0,0,0.4),0_0_40px_rgba(0,229,255,0.08)] bg-[rgba(255,255,255,0.04)]'
+            : 'border-[rgba(255,255,255,0.08)] hover:border-[rgba(255,255,255,0.15)] bg-[rgba(255,255,255,0.02)]'
+        }`}
+      >
+        <div className="flex flex-col sm:flex-row items-stretch gap-0">
+          {/* Suchfeld */}
+          <div className="relative flex-1 flex items-center">
+            <Search
+              className={`absolute left-4 w-4 h-4 transition-colors duration-200 ${isFocused ? 'text-[#00e5ff]' : 'text-white/30'}`}
+            />
+            <input
+              ref={inputRef}
+              type="text"
+              placeholder={activeCategory ? `Suche in ${activeCategory.label}…` : 'Was suchst du?'}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              className="w-full bg-transparent py-4 pl-11 pr-4 text-sm text-white placeholder-white/30 outline-none"
+            />
+          </div>
+
+          {/* Trennlinie */}
+          <div className="hidden sm:block w-px bg-[rgba(255,255,255,0.08)] self-stretch my-2" />
+
+          {/* Ort */}
+          <div className="relative flex items-center sm:w-44">
+            <MapPin className="absolute left-4 w-4 h-4 text-white/30" />
+            <input
+              type="text"
+              placeholder="PLZ oder Ort"
+              value={location}
+              onChange={handleLocationChange}
+              className="w-full bg-transparent py-4 pl-11 pr-4 text-sm text-white placeholder-white/30 outline-none"
+            />
+          </div>
+
+          {/* Umkreis */}
+          <div className="hidden sm:block w-px bg-[rgba(255,255,255,0.08)] self-stretch my-2" />
+          <div className="flex items-center sm:w-36">
+            <select
+              value={radius}
+              onChange={(e) => setRadius(Number(e.target.value))}
+              disabled={!location.trim()}
+              className={`w-full bg-transparent py-4 px-4 text-sm outline-none appearance-none cursor-pointer ${!location.trim() ? 'text-white/20 cursor-not-allowed' : 'text-white/70'}`}
+            >
+              {RADIUS_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value} className="bg-[#0a0a0a] text-white">
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Such-Button */}
+          <div className="p-2 flex items-center">
+            <button
+              type="submit"
+              disabled={loading || (!query.trim() && !activeCategory?.categoryId)}
+              className="flex items-center justify-center gap-2 w-full sm:w-auto bg-[#00e5ff] hover:bg-[#00e5ff]/90 active:scale-95 text-black font-semibold rounded-xl py-2.5 px-5 text-sm transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-[0_0_20px_rgba(0,229,255,0.25)]"
+            >
+              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
+              <span>Finden</span>
+            </button>
+          </div>
         </div>
-
-        <div className="relative sm:w-44">
-          <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
-          <input
-            type="text"
-            placeholder="PLZ oder Ort"
-            value={location}
-            onChange={handleLocationChange}
-            className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-sm text-white placeholder-white/30 outline-none focus:border-neon-cyan/50 focus:ring-1 focus:ring-neon-cyan/30 transition-all"
-          />
-        </div>
-
-        <select
-          value={radius}
-          onChange={(e) => setRadius(Number(e.target.value))}
-          disabled={!location.trim()}
-          title={!location.trim() ? 'PLZ oder Ort eingeben um Umkreis zu wählen' : ''}
-          className={`bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-sm outline-none focus:border-neon-cyan/50 focus:ring-1 focus:ring-neon-cyan/30 transition-all sm:w-36 appearance-none ${!location.trim() ? 'text-white/25 cursor-not-allowed opacity-60' : 'text-white cursor-pointer'}`}
-        >
-          {RADIUS_OPTIONS.map((opt) => (
-            <option key={opt.value} value={opt.value} className="bg-base text-white">
-              {opt.label}
-            </option>
-          ))}
-        </select>
-
-        <button
-          type="submit"
-          disabled={loading || (!query.trim() && !activeCategory?.categoryId)}
-          className="flex items-center justify-center gap-2 bg-neon-cyan/15 hover:bg-neon-cyan/25 border border-neon-cyan/30 text-neon-cyan font-medium rounded-xl py-3 px-6 text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-        >
-          {loading ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
-          ) : (
-            <Search className="w-4 h-4" />
-          )}
-          Finden
-        </button>
       </div>
 
+      {/* Popular Searches — nur wenn noch nicht gesucht */}
+      {!hasSearched && !activeCategory && (
+        <div className="flex flex-wrap items-center gap-2 mt-3">
+          <span className="text-[11px] text-white/30">Beliebt:</span>
+          {POPULAR_SEARCHES.map((term) => (
+            <button
+              key={term}
+              type="button"
+              onClick={() => { setQuery(term); inputRef.current?.focus() }}
+              className="text-[11px] text-white/40 hover:text-[#00e5ff] border border-[rgba(255,255,255,0.08)] hover:border-[rgba(0,229,255,0.2)] rounded-full px-2.5 py-1 transition-all duration-200 cursor-pointer"
+            >
+              {term}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Filter + Alert */}
       <div className="flex items-center justify-between mt-3">
         <FilterPanel
           minPrice={minPrice}
@@ -135,7 +180,7 @@ export function SearchBar({ onSearch, loading, activeCategory, onClearCategory, 
           <button
             type="button"
             onClick={onSearchAlert}
-            className="flex items-center gap-1.5 text-xs text-white/40 hover:text-neon-cyan transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 text-xs text-white/40 hover:text-[#00e5ff] transition-colors cursor-pointer"
           >
             <Bell className="w-3.5 h-3.5" />
             Suchalarm einrichten

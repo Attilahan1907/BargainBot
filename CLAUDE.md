@@ -202,6 +202,36 @@ Kein Scraper macht Requests ohne diese Sicherheitsschicht.
 
 ---
 
+## UI-Integration: Premium Design (Stand 20.02.2026)
+
+### Analyse-Ergebnis: KEIN Framework-Wechsel nötig
+
+| Aspekt | Premium UI (v0/Next.js) | Aktuelles Frontend | Aktion |
+|--------|------------------------|-------------------|--------|
+| Framework | Next.js 16 | React 19 + Vite | Vite bleibt, Next.js ignorieren |
+| Tailwind | v4 | v4 | Identisch ✅ |
+| Animationen | Native CSS | Native CSS | Identisch ✅ |
+| Primary-Farbe | #00e5ff | #00f0ff (neon-cyan) | Angleichen |
+| Accent | #7c3aed | #a855f7 (electric-purple) | Angleichen |
+| Hintergrund | #050505 | #0a0b10 | Angleichen |
+| shadcn/ui | 65 Komponenten | Keine | Nicht einbauen (overkill) |
+
+### Was integriert wird (NUR Styling, KEINE Logik-Änderungen):
+1. `index.css` → CSS-Variablen auf Premium-Werte angleichen
+2. `App.jsx` → Ambient-Glow-Hintergrund (fixed blobs wie in page.tsx)
+3. `Header.jsx` → Pill-Nav, Glassmorphism, fixed top
+4. `SearchBar.jsx` → Hero-Search-Style (großes zentriertes Input mit Focus-Glow)
+5. `CategoryGrid.jsx` → Bento-Grid-Layout
+6. `StatsBar.jsx` → 4-Spalten-Grid mit Dividers
+
+### Was NICHT geändert wird (Logic Layer):
+- `useSearch.js`, `api/search.js`, `api/alerts.js`, `api/searchAlerts.js`
+- `useFavorites.js`, `useNotificationSettings.jsx`
+- `computeDealScore.js` und alle utils/data Files
+- Gesamtes Python-Backend
+
+---
+
 ## Regel: Bei jedem Git-Push → PROGRESS.md aktualisieren
 
 **PFLICHT:** Jedes Mal wenn Code auf Git gepusht wird, muss `PROGRESS.md` im Projektwurzelverzeichnis aktualisiert werden.
