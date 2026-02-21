@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emirates of Deals – Logo Preview</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #050505;
+      color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      padding: 48px 32px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: #00e5ff;
+      margin-bottom: 8px;
+      opacity: 0.7;
+    }
+    h2 {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 900;
+      background: linear-gradient(90deg, #00e5ff, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 64px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      border-color: rgba(0,229,255,0.35);
+      box-shadow: 0 0 40px rgba(0,229,255,0.06);
+    }
+    .card img {
+      max-width: 100%;
+      height: auto;
+    }
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #888;
+    }
+    .card-desc {
+      font-size: 12px;
+      color: #555;
+      text-align: center;
+      line-height: 1.6;
+      max-width: 340px;
+    }
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,229,255,0.4);
+      color: #00e5ff;
+    }
+    .tag.recommended {
+      background: linear-gradient(135deg, rgba(0,229,255,0.12), rgba(124,58,237,0.12));
+      border-color: rgba(0,229,255,0.6);
+      color: #00e5ff;
+    }
+    .divider {
+      width: 1px;
+      background: linear-gradient(180deg, transparent, rgba(0,229,255,0.3), transparent);
+    }
+    footer {
+      text-align: center;
+      margin-top: 64px;
+      font-size: 11px;
+      color: #333;
+      letter-spacing: 2px;
+    }
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Emirates of Deals</h1>
+  <h2>Logo Concepts</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <span class="tag recommended">Recommended ✦</span>
+      <img src="logo-crown.svg" alt="Logo Crown" />
+      <span class="card-title">V1 — Emirates Crown</span>
+      <p class="card-desc">
+        Stilisierte Krone mit 3 Peaks, Neon-Cyan/Purple Gradient, Amber-Jewels.
+        Premium, einprägsam, perfekt für Header.
+      </p>
+    </div>
+
+    <div class="card">
+      <span class="tag">V2</span>
+      <img src="logo-diamond-tag.svg" alt="Logo Diamond Tag" />
+      <span class="card-title">V2 — Neon Diamond Tag</span>
+      <p class="card-desc">
+        Diamantförmiges Preisetikett mit glassmorphistischem Lila-Hintergrund,
+        Neon-Cyan-Outline, % Symbol. Horizontal kompakt für Navigation.
+      </p>
+    </div>
+
+    <div class="card">
+      <span class="tag">V3</span>
+      <img src="logo-geometric-e.svg" alt="Logo Geometric E" />
+      <span class="card-title">V3 — Geometric E</span>
+      <p class="card-desc">
+        Futuristisches "E" aus geometrischen Balken mit Pfeilspitzen (= sinkende Preise).
+        Cyan→Purple Gradient. Modern, technisch, einzigartig.
+      </p>
+    </div>
+
+    <div class="card">
+      <span class="tag">V4</span>
+      <img src="logo-shield.svg" alt="Logo Shield" />
+      <span class="card-title">V4 — Shield & Lightning</span>
+      <p class="card-desc">
+        Glassmorphismus-Schutzschild mit Cyan→Amber Blitz. Symbolisiert
+        Verbraucherschutz & Schnäppchenjagd. Horizontal, horizontal kompakt.
+      </p>
+    </div>
+
+  </div>
+
+  <footer>Emirates of Deals · Logo Concepts · 2026</footer>
+</body>
+</html>

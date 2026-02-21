@@ -1,12 +1,25 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useMemo } from 'react'
 import { ProductCard } from './ProductCard'
 import { computeDealScores } from '../utils/computeDealScore'
+import { extractGpuModel, extractCpuModel, extractSmartphoneModel } from '../utils/extractModel'
 
 const BENCHMARK_TYPES = ['gpu', 'cpu', 'smartphone', 'ram']
 
 export function ResultsGrid({ results, benchmarkType, onOpenSettings, showImages, hasMore, loadingMore, onLoadMore }) {
-  const hasBenchmark = BENCHMARK_TYPES.includes(benchmarkType)
-  const scores = computeDealScores(results, benchmarkType)
+  // Auto-detect benchmark type from result titles when no category is active
+  const effectiveBenchmarkType = useMemo(() => {
+    if (benchmarkType) return benchmarkType
+    if (results.length === 0) return null
+    const sample = results.slice(0, 20)
+    const threshold = Math.max(4, Math.ceil(sample.length * 0.35))
+    if (sample.filter(r => extractGpuModel(r.title)).length >= threshold) return 'gpu'
+    if (sample.filter(r => extractCpuModel(r.title)).length >= threshold) return 'cpu'
+    if (sample.filter(r => extractSmartphoneModel(r.title)).length >= threshold) return 'smartphone'
+    return null
+  }, [results, benchmarkType])
+
+  const hasBenchmark = BENCHMARK_TYPES.includes(effectiveBenchmarkType)
+  const scores = computeDealScores(results, effectiveBenchmarkType)
   const sentinelRef = useRef(null)
 
   // Auto-load when sentinel element scrolls into view

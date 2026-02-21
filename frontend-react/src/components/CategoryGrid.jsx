@@ -47,8 +47,8 @@ export function CategoryGrid({ onCategorySelect }) {
   return (
     <section id="categories" className="mx-auto w-full max-w-5xl px-6">
 
-      <div className="mb-6 text-center">
-        <h2 className="text-xl font-semibold tracking-tight text-foreground">
+      <div className="mb-8 text-center">
+        <h2 className="text-2xl font-bold tracking-tight text-foreground">
           Kategorien durchstöbern
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
@@ -71,7 +71,7 @@ export function CategoryGrid({ onCategorySelect }) {
                 background: `linear-gradient(135deg, ${c.glow}, transparent)`,
               } : {}}
               className={`
-                h-[130px] group relative flex flex-col items-start justify-end overflow-hidden
+                h-[145px] group relative flex flex-col items-start justify-end overflow-hidden
                 rounded-2xl border p-4
                 transition-all duration-150 active:scale-[0.97]
                 ${isSelected
@@ -80,13 +80,16 @@ export function CategoryGrid({ onCategorySelect }) {
               `}
             >
               <div
-                className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl border transition-colors"
+                className="mb-3 flex h-10 w-10 items-center justify-center rounded-2xl border transition-colors"
                 style={{ backgroundColor: c.bg, borderColor: c.border, color: c.accent }}
               >
-                <Icon size={18} />
+                <Icon size={20} />
               </div>
-              <h3 className="text-sm font-semibold text-foreground text-left leading-tight">{cat.label}</h3>
+              <h3 className="text-sm font-bold text-foreground text-left leading-tight">{cat.label}</h3>
               <p className="mt-0.5 text-[11px] text-muted-foreground">{cat.subcategories.length} Kategorien</p>
+              {/* Farbige Akzentlinie unten */}
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-2xl opacity-50"
+                style={{ backgroundColor: c.accent }} />
             </button>
           )
         })}
@@ -109,7 +112,7 @@ export function CategoryGrid({ onCategorySelect }) {
                   background: `linear-gradient(135deg, ${c.glow}, transparent)`,
                 } : {}}
                 className={`
-                  h-[140px] group relative flex flex-col items-start justify-end overflow-hidden
+                  h-[158px] group relative flex flex-col items-start justify-end overflow-hidden
                   rounded-2xl border p-6
                   transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)]
                   hover:-translate-y-0.5 active:scale-[0.98] active:shadow-none
@@ -138,13 +141,16 @@ export function CategoryGrid({ onCategorySelect }) {
                   style={{ backgroundColor: c.accent }}
                 />
                 <div
-                  className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border transition-colors duration-200"
+                  className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl border transition-colors duration-200"
                   style={{ backgroundColor: c.bg, borderColor: c.border, color: c.accent }}
                 >
-                  <Icon size={20} />
+                  <Icon size={22} />
                 </div>
-                <h3 className="text-sm font-semibold text-foreground">{cat.label}</h3>
+                <h3 className="text-sm font-bold text-foreground">{cat.label}</h3>
                 <p className="mt-1 text-xs text-muted-foreground truncate w-full">{cat.subcategories.length} Unterkategorien</p>
+                {/* Farbige Akzentlinie unten */}
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-200"
+                  style={{ backgroundColor: c.accent }} />
               </button>
 
               {showPanel && (() => {

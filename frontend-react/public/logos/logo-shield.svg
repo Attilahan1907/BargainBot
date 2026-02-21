@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 210" width="640" height="210" role="img" aria-label="Emirates of Deals">
+  <defs>
+    <linearGradient id="sh-glass" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#7c3aed" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="sh-text" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00e5ff"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="sh-bolt" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00e5ff"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <radialGradient id="sh-glow" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="sh-outer" x="-30%" y="-25%" width="160%" height="150%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="sh-bolt-glow" x="-60%" y="-25%" width="220%" height="150%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="sh-soft" x="-15%" y="-15%" width="130%" height="130%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="640" height="210" fill="#050505"/>
+
+  <!-- Ambient glow behind shield -->
+  <path d="M 42,22 L 202,22 L 202,132 L 122,197 L 42,132 Z"
+        fill="url(#sh-glow)" filter="url(#sh-outer)"/>
+
+  <!-- Shield outer glow stroke -->
+  <path d="M 42,22 L 202,22 L 202,132 L 122,197 L 42,132 Z"
+        fill="none" stroke="#00e5ff" stroke-width="2.5"
+        opacity="0.50" filter="url(#sh-outer)"/>
+
+  <!-- Shield glassmorphism body -->
+  <path d="M 42,22 L 202,22 L 202,132 L 122,197 L 42,132 Z"
+        fill="url(#sh-glass)"/>
+
+  <!-- Shield glass sheen (top half highlight) -->
+  <path d="M 42,22 L 202,22 L 202,105 L 122,125 L 42,105 Z"
+        fill="rgba(255,255,255,0.06)"/>
+
+  <!-- Shield inner border -->
+  <path d="M 42,22 L 202,22 L 202,132 L 122,197 L 42,132 Z"
+        fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.2"/>
+
+  <!-- Inner shield frame -->
+  <path d="M 58,38 L 186,38 L 186,128 L 122,182 L 58,128 Z"
+        fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+
+  <!-- Cyan top border line (accent) -->
+  <line x1="42" y1="22" x2="202" y2="22"
+        stroke="#00e5ff" stroke-width="2.5" opacity="0.85"
+        filter="url(#sh-soft)"/>
+
+  <!-- Lightning bolt inside shield -->
+  <!-- Glow layer first -->
+  <path d="M 136,44 L 110,106 L 127,106 L 100,172 L 148,100 L 130,100 Z"
+        fill="#00e5ff" opacity="0.25" filter="url(#sh-bolt-glow)"/>
+  <!-- Main bolt -->
+  <path d="M 136,44 L 110,106 L 127,106 L 100,172 L 148,100 L 130,100 Z"
+        fill="url(#sh-bolt)" filter="url(#sh-soft)"/>
+  <!-- Bolt highlight -->
+  <path d="M 136,44 L 126,75 L 135,75 L 127,100 L 130,100 Z"
+        fill="rgba(255,255,255,0.30)"/>
+
+  <!-- Vertical separator -->
+  <line x1="228" y1="30" x2="228" y2="180" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+
+  <!-- EMIRATES text -->
+  <text x="248" y="102"
+        font-family="'Arial Black', 'Impact', Arial, sans-serif"
+        font-size="46" font-weight="900"
+        fill="#f0f0f0"
+        text-anchor="start"
+        letter-spacing="2">EMIRATES</text>
+
+  <!-- Cyan underline -->
+  <line x1="248" y1="114" x2="618" y2="114"
+        stroke="url(#sh-text)" stroke-width="0.9" opacity="0.42"/>
+
+  <!-- of Deals -->
+  <text x="261" y="148"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="19" font-weight="300"
+        fill="#00e5ff"
+        text-anchor="start"
+        letter-spacing="9"
+        opacity="0.90">of  Deals</text>
+</svg>

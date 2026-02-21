@@ -148,7 +148,7 @@ export default function App() {
 
         <main className="relative z-10">
           {/* Hero Section — von v0 page.tsx */}
-          <section className="flex flex-col items-center justify-center px-6 pb-8 pt-24 md:pb-10 md:pt-48">
+          <section className="flex flex-col items-center justify-center px-6 pb-8 pt-24 md:pb-10 md:pt-40">
             {/* Badge */}
             <div className="mb-8 flex items-center gap-2 rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-primary" />
@@ -175,7 +175,7 @@ export default function App() {
             <DealCounter />
 
             {/* SearchBar (Hero-Modus) */}
-            <div className="mt-10 w-full md:mt-12">
+            <div className="mt-8 w-full md:mt-10">
               <SearchBar
                 onSearch={handleSearch}
                 loading={loading}
@@ -203,10 +203,7 @@ export default function App() {
           <footer className="border-t border-[rgba(255,255,255,0.06)] py-8">
             <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 md:flex-row">
               <div className="flex items-center gap-2">
-                <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary">
-                  <span className="text-xs font-bold text-primary-foreground">E</span>
-                </div>
-                <span className="text-xs font-medium text-muted-foreground">Emirates of Deals</span>
+                <img src="/logos/logo-crown.svg" alt="Emirates of Deals" className="h-8 w-auto opacity-75" />
               </div>
               <p className="text-xs text-muted-foreground">
                 Mit Präzision gebaut. Fürs Sparen designt.

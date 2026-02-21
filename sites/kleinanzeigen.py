@@ -89,6 +89,16 @@ def _parse_page(soup, query, category=None, has_category_id=False):
         image_url = None
         if img_tag:
             image_url = img_tag.get("data-src") or img_tag.get("src")
+        # Location aus top-left extrahieren (erste nicht-leere Zeile)
+        location_tag = item.select_one(".aditem-main--top--left")
+        location_text = ""
+        if location_tag:
+            for line in location_tag.get_text("\n").split("\n"):
+                line = line.strip()
+                if line:
+                    location_text = line
+                    break
+
         try:
             price_clean = price_text.replace("€", "").replace(".", "").replace(",", ".").strip()
             price = float(re.findall(r"\d+\.?\d*", price_clean)[0])
@@ -100,6 +110,7 @@ def _parse_page(soup, query, category=None, has_category_id=False):
                 "price": price,
                 "original": f"€{price:.2f}",
                 "image": image_url,
+                "location": location_text,
             })
         except Exception:
             continue

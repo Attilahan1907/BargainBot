@@ -70,10 +70,10 @@ export function ProductCard({ item, rank, isBest, allPrices, dealScore, isBenchm
         <div className="absolute top-4 right-4 flex gap-2 z-10">
           <button
             onClick={handleFavoriteClick}
-            className={`p-2 rounded-lg transition-all ${
+            className={`p-2.5 rounded-xl transition-all duration-200 ${
               isFav
-                ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
-                : 'bg-foreground/5 text-foreground/40 hover:bg-foreground/10 hover:text-foreground/60'
+                ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30 shadow-[0_0_12px_rgba(239,68,68,0.25)]'
+                : 'bg-foreground/5 text-foreground/35 hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/20 border border-transparent'
             }`}
             title={isFav ? 'Aus Favoriten entfernen' : 'Zu Favoriten hinzufügen'}
           >
@@ -81,10 +81,10 @@ export function ProductCard({ item, rank, isBest, allPrices, dealScore, isBenchm
           </button>
           <button
             onClick={handleAlertClick}
-            className={`p-2 rounded-lg transition-all ${
+            className={`p-2.5 rounded-xl transition-all duration-200 ${
               favorite?.alertPrice
-                ? 'bg-neon-cyan/20 text-neon-cyan hover:bg-neon-cyan/30'
-                : 'bg-foreground/5 text-foreground/40 hover:bg-foreground/10 hover:text-foreground/60'
+                ? 'bg-neon-cyan/20 text-neon-cyan hover:bg-neon-cyan/30 shadow-[0_0_12px_rgba(0,229,255,0.2)]'
+                : 'bg-foreground/5 text-foreground/35 hover:bg-neon-cyan/10 hover:text-neon-cyan border border-transparent hover:border-neon-cyan/20'
             }`}
             title={favorite?.alertPrice ? `Alert bei ${favorite.alertPrice}€` : 'Preis-Alert einrichten'}
           >
@@ -132,6 +132,22 @@ export function ProductCard({ item, rank, isBest, allPrices, dealScore, isBenchm
           {item.title}
         </h3>
 
+        {/* Preis-Leistungs-Anzeige — nur bei Benchmark-Kategorien (GPU/CPU/RAM/Smartphone) */}
+        {isBenchmark && hasScore && dealScore?.model && (
+          <div
+            className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-[10px]"
+            style={{ background: 'rgba(0,229,255,0.05)', border: '1px solid rgba(0,229,255,0.12)' }}
+          >
+            <span className="text-muted-foreground shrink-0">Erkannt:</span>
+            <span className="font-semibold text-primary/90 truncate">{dealScore.model}</span>
+            {dealScore.benchmark && (
+              <span className="text-muted-foreground shrink-0 ml-auto whitespace-nowrap">
+                {Number(dealScore.benchmark).toLocaleString('de-DE')} Pkt.
+              </span>
+            )}
+          </div>
+        )}
+
         {favorite?.alertPrice && (
           <div className="bg-neon-cyan/10 border border-neon-cyan/20 rounded-lg px-3 py-1.5">
             <p className="text-xs text-neon-cyan">
@@ -142,7 +158,7 @@ export function ProductCard({ item, rank, isBest, allPrices, dealScore, isBenchm
 
         <div className="mt-auto flex items-end justify-between gap-3">
           <div>
-            <p className={`text-2xl font-bold font-mono ${isBest ? 'text-emerald-glow' : 'text-neon-cyan'}`}>
+            <p className={`text-2xl font-bold font-mono transition-all ${isBest ? 'text-emerald-glow drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'text-neon-cyan drop-shadow-[0_0_8px_rgba(0,229,255,0.4)]'}`}>
               {formatPrice(item.price)}
             </p>
             {item.original && (
@@ -153,10 +169,10 @@ export function ProductCard({ item, rank, isBest, allPrices, dealScore, isBenchm
             href={item.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`flex items-center gap-1.5 text-xs font-medium rounded-lg py-2 px-3 transition-all whitespace-nowrap border ${
+            className={`flex items-center gap-1.5 text-xs font-semibold rounded-xl py-2 px-3.5 transition-all duration-200 whitespace-nowrap border ${
               isBest
-                ? 'bg-[rgba(245,158,11,0.12)] hover:bg-[rgba(245,158,11,0.2)] border-[rgba(245,158,11,0.25)] text-[#f59e0b]'
-                : 'bg-neon-cyan/10 hover:bg-neon-cyan/20 border-neon-cyan/20 text-neon-cyan'
+                ? 'bg-[rgba(245,158,11,0.12)] hover:bg-[rgba(245,158,11,0.2)] border-[rgba(245,158,11,0.25)] text-[#f59e0b] hover:shadow-[0_4px_14px_rgba(245,158,11,0.25)] hover:-translate-y-0.5'
+                : 'bg-neon-cyan/10 hover:bg-neon-cyan/20 border-neon-cyan/20 text-neon-cyan hover:shadow-[0_4px_14px_rgba(0,229,255,0.2)] hover:-translate-y-0.5'
             }`}
           >
             <ExternalLink className="w-3.5 h-3.5" />

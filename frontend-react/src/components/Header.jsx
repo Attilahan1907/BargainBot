@@ -36,7 +36,7 @@ export function Header({ onLogoClick, onWatchlistClick, onSettingsClick, onAlert
         {/* ── Logo ── */}
         <button onClick={onLogoClick} className="group flex shrink-0 cursor-pointer">
           <img
-            src="/logo.png"
+            src="/logos/logo-crown.svg"
             alt="Emirates of Deals"
             className={`w-auto object-contain group-hover:opacity-85 transition-all duration-300 ${
               scrolled ? 'h-12' : 'h-20 md:h-36'

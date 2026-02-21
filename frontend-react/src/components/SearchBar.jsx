@@ -130,8 +130,8 @@ export function SearchBar({
         </div>
 
         {/* Standort-Zeile */}
-        <div className="mt-4 flex items-center justify-center">
-          <div className="flex items-center gap-2 rounded-xl border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.02)] px-3 py-2">
+        <div className="mt-3 flex items-center justify-center">
+          <div className="flex items-center gap-2 rounded-2xl border border-[rgba(255,255,255,0.09)] bg-[rgba(255,255,255,0.03)] px-4 py-2.5 transition-all duration-200 hover:border-[rgba(0,229,255,0.18)] hover:bg-[rgba(255,255,255,0.04)]">
             <MapPin className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
             <span className="text-xs text-muted-foreground shrink-0">Standort</span>
             <div className="w-px h-3.5 bg-border" />
